@@ -3,6 +3,17 @@
 ## Project Overview
 The Anomaly Detector is a cutting-edge computer vision project designed to identify defects and anomalies in manufactured products. Leveraging deep learning techniques, specifically autoencoders, this application provides a robust solution for quality control in industrial settings. It's built to be intuitive, providing clear visual feedback on detected anomalies through heatmaps and binary anomaly maps.
 
+# Note :
+* **THIS PROJECT IS STILL UNDER DEVELOPMENT!!** If you don't see different products mentioned in MVTec Anomaly Detection Dataset, then it's in development and training and will be updated soon. thank you for your paitence.
+
+### Present 
+Bottle model
+
+### Models to be added soon
+* cable, capsule, carpet, grid, hazelnut, leather, metal_nut, pill, screw, tile, toothbrush, transistor, wood, zipper
+
+
+
 ## How It Works
 At its core, the Anomaly Detector utilizes a U-Net style autoencoder, a type of neural network trained to reconstruct input data.
 
@@ -30,8 +41,7 @@ This project utilizes the **MVTec Anomaly Detection Dataset**. This dataset is s
 *   **Quantitative Metrics:** Displays peak reconstruction error and anomaly percentage for objective assessment.
 *   **Extensible Training System:** The backend training script is designed to easily accommodate new product categories.
 
-# Note :
-* **THIS PROJECT IS STILL UNDER DEVELOPMENT!!** If you don't see different products mentioned in MVTec Anomaly Detection Dataset, then it's in development and training and will be updated soon. thank you for your paitence.
+
 
 ## Setup and Local Usage Guide
 
