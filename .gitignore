@@ -1,0 +1,5 @@
+app/static/uploads
+# Ignore all files in the uploads directory
+app/static/uploads/*.png
+Dataset
+*.png

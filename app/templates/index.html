@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manufacturing Anomaly Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <header class="site-header">
+            <h1>Anomaly Detector</h1>
+            <h2>Created by Param Dholakia for Intel AI for Manufacturing</h2>
+        </header>
+
+        <div class="main-container">
+            <main class="control-panel">
+                <form action="/predict" method="post" enctype="multipart/form-data" class="upload-section">
+                    <div class="file-drop-zone" id="drop-zone">
+                        <input type="file" name="file" id="file-input" required>
+                        <p>Drag & Drop Image or Click to Upload</p>
+                        <p id="file-name"></p>
+                    </div>
+                    <div class="controls">
+                        <select name="category" class="product-select" required>
+                            <option value="" disabled selected>Select Product Category</option>
+                            {% for category in categories %}
+                                <option value="{{ category }}" {% if category == selected_category %}selected{% endif %}>{{ category }}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="btn-analyze">Analyze</button>
+                    </div>
+                </form>
+            </main>
+
+            {% if results %}
+            <section class="analysis-dashboard visible">
+                <div class="results-grid">
+                    <div class="result-card">
+                    <h2>Original Image</h2>
+                    <img src="{{ results.original_image }}" alt="Original Image">
+                </div>
+                <div class="result-card">
+                    <h2>Reconstructed Image</h2>
+                    <img src="{{ results.reconstructed_image }}" alt="Reconstructed Image">
+                </div>
+                <div class="result-card">
+                    <h2>Difference Map</h2>
+                    <img src="{{ results.difference_image }}" alt="Difference Image">
+                </div>
+                <div class="result-card">
+                    <h2>Anomaly Heatmap</h2>
+                    <img src="{{ results.heatmap_color }}" alt="Color Heatmap">
+                </div>
+                <div class="result-card">
+                    <h2>Binary Anomaly Map</h2>
+                    <img src="{{ results.heatmap_bw }}" alt="B&W Anomaly Map">
+                </div>
+                <div class="result-card stats-card">
+                    <h2>Analysis Metrics</h2>
+                    <div class="stat">
+                        <p>Peak Reconstruction Error:</p>
+                        <p class="stat-value">{{ results.peak_error }}</p>
+                    </div>
+                    <div class="stat">
+                        <p>Anomaly Percentage:</p>
+                        <p class="stat-value">{{ results.anomaly_percentage }}%</p>
+                    </div>
+                </div>
+                </div>
+            </section>
+            {% endif %}
+        </div>
+
+        <footer class="site-footer">
+            <div class="footer-content">
+                <div class="footer-section about">
+                    <h3>About the Project</h3>
+                    <p>This tool uses a deep learning model (U-Net Autoencoder) to detect anomalies in manufacturing products. It was trained on the MVTec Anomaly Detection dataset.</p>
+                    <p><strong>Technologies:</strong> TensorFlow, Keras, Flask, OpenCV</p>
+                </div>
+                <div class="footer-section contact">
+                    <h3>Contact Information</h3>
+                    <ul>
+                        <li><i class="fas fa-user"></i> Param Ashish Dholakia</li>
+                        <li><i class="fas fa-envelope"></i> paramdholakia@gmail.com</li>
+                        <li><i class="fas fa-phone"></i> +91 9499631694</li>
+                        <li><i class="fas fa-id-card"></i> 220850131003</li>
+                        <li><i class="fas fa-university"></i> 085 - HJD Institute</li>
+                        <li><i class="fas fa-laptop-code"></i> Computer Science Engineering</li>
+                        <li><i class="fas fa-graduation-cap"></i> Semester 6</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Bhuj, Gujarat</li>
+                        <li><i class="fas fa-chalkboard-teacher"></i> T00175 - Vekariya Dilip Murji</li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-input');
+        const fileNameDisplay = document.getElementById('file-name');
+
+        dropZone.addEventListener('click', () => fileInput.click());
+
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = 'var(--glow-color)';
+        });
+
+        dropZone.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = 'var(--border-color)';
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = 'var(--border-color)';
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                fileInput.files = files;
+                fileNameDisplay.textContent = files[0].name;
+            }
+        });
+
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                fileNameDisplay.textContent = fileInput.files[0].name;
+            }
+        });
+    </script>
+</body>
+</html>
