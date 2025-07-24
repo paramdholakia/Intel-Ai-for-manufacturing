@@ -1,9 +1,7 @@
-
-
 import os
 import sys
 import tensorflow as tf
-from tensorflow.keras import layers, models, callbacks, optimizers
+from tensorflow.keras import layers, models, callbacks, optimizers # type: ignore
 import numpy as np
 from sklearn.model_selection import train_test_split
 from PIL import Image
@@ -194,7 +192,7 @@ if __name__ == '__main__':
     os.makedirs(models_dir, exist_ok=True)
 
     # Specify the categories to train. Add more categories here as needed.
-    categories_to_train = ['bottle', 'cable', 'capsule']
+    categories_to_train = ['bottle']
     
     print(f"Dataset Root: {dataset_root}")
     print(f"Models Directory: {models_dir}")
